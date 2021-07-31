@@ -55,11 +55,12 @@ impl TimeoutDuration {
 
 impl Into<String> for &TimeoutDuration {
     fn into(self) -> String {
-        let total_seconds = self.total_seconds() - self.progress;
-        let hour = total_seconds / 3600;
-        let minute = (total_seconds / 60) % 60;
-        let seconds = total_seconds % 60;
-        format!("{:02}:{:02}:{:02}", hour, minute, seconds)
+        let current = self.total_seconds() - self.progress;
+        let sign = if current > 0 { "" } else { "-" };
+        let hour = current.abs() / 3600;
+        let minute = (current.abs() / 60) % 60;
+        let seconds = current.abs() % 60;
+        format!("{}{:02}:{:02}:{:02}", &sign, hour, minute, seconds)
     }
 }
 

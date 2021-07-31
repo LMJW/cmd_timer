@@ -1,6 +1,6 @@
 /// Contain the UI of the timer
 use iced::{
-    button, executor, time, Align, Application, Button, Clipboard, Column, Command, Element,
+    button, executor, time, Align, Application, Button, Clipboard, Color, Column, Command, Element,
     Settings, Subscription, Text,
 };
 use notify_rust::{Notification, Timeout};
@@ -73,10 +73,15 @@ impl Application for Timer {
         // TODO: figure out how to center the text & button
         let button_label = self.button_label();
         let msg = self.on_press_command();
+        let color = if self.value.is_timeout() {
+            Color::from_rgb(255., 0., 0.)
+        } else {
+            Color::BLACK
+        };
         Column::new()
             .padding(20)
             .push(Text::new(&self.title).size(30))
-            .push(Text::new(&self.value).size(50))
+            .push(Text::new(&self.value).size(50).color(color))
             .push(Button::new(&mut self.stop, Text::new(button_label)).on_press(msg))
             .align_items(Align::Center)
             .into()
