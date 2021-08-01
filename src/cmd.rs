@@ -1,4 +1,5 @@
-use crate::parse::{parse_duration, TimeoutDuration};
+use crate::parse::parse_duration;
+use crate::timer::TimeoutDuration;
 /// Command line parse the time
 use structopt::StructOpt;
 

@@ -2,6 +2,7 @@ use structopt::StructOpt;
 use tracing_subscriber;
 mod cmd;
 mod parse;
+pub mod timer;
 mod ui;
 
 pub type Result<T> = anyhow::Result<T>;

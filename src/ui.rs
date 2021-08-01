@@ -7,7 +7,7 @@ use notify_rust::{Notification, Timeout};
 // use mac_notification_sys::*;
 use tracing::info;
 
-use crate::{cmd::TimerOpt, parse::TimeoutDuration};
+use crate::{cmd::TimerOpt, timer::TimeoutDuration};
 
 #[derive(Default)]
 struct Timer {
@@ -79,9 +79,14 @@ impl Application for Timer {
             Color::BLACK
         };
         Column::new()
-            .padding(20)
+            .padding(25)
             .push(Text::new(&self.title).size(30))
             .push(Text::new(&self.value).size(50).color(color))
+            .push(
+                Text::new(&self.value.total_duration())
+                    .size(15)
+                    .color(color),
+            )
             .push(Button::new(&mut self.stop, Text::new(button_label)).on_press(msg))
             .align_items(Align::Center)
             .into()
@@ -120,7 +125,7 @@ impl Timer {
 
 pub fn start(opt: TimerOpt) -> iced::Result {
     let mut setting = Settings::default();
-    setting.window.size = (250, 150);
+    setting.window.size = (250, 200);
     setting.flags = opt;
     Timer::run(setting)
 }
